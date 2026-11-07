@@ -27,25 +27,27 @@ jobs:
           java-version: '21'
 
       - name: Install dependencies
+        working-directory: ff_match_stats_analyzer
         run: npm install
 
       - name: Add Android platform
+        working-directory: ff_match_stats_analyzer
         run: npx cap add android
 
       - name: Sync Capacitor
+        working-directory: ff_match_stats_analyzer
         run: npx cap sync android
 
       - name: Grant Gradle permission
-        run: chmod +x android/gradlew
+        run: chmod +x ff_match_stats_analyzer/android/gradlew
 
       - name: Build APK
-        run: |
-          cd android
-          ./gradlew assembleDebug
+        working-directory: ff_match_stats_analyzer/android
+        run: ./gradlew assembleDebug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: FF-Match-Stats-Analyzer-Android-APK
-          path: android/app/build/outputs/apk/debug/app-debug.apk
+          path: ff_match_stats_analyzer/android/app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
