@@ -1,0 +1,6 @@
+{
+  "appId": "com.ffmsa.analyzer",
+  "appName": "FF Match Stats Analyzer",
+  "webDir": "www",
+  "bundledWebRuntime": false
+}

@@ -1,0 +1,56 @@
+{
+  "name": "ff-match-stats-analyzer",
+  "version": "1.1.0",
+  "private": true,
+  "description": "Free Fire esports match statistics analyzer",
+  "main": "electron/main.cjs",
+  "scripts": {
+    "android:sync": "npx cap sync android",
+    "android:open": "npx cap open android",
+    "android:apk": "cd android && gradlew assembleDebug",
+    "windows:dir": "electron-builder --dir",
+    "windows:installer": "electron-builder --win nsis"
+  },
+  "dependencies": {
+    "@capacitor/android": "^7.4.3",
+    "@capacitor/core": "^7.4.3"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^7.4.3",
+    "electron": "^36.3.2",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "com.ffmsa.analyzer",
+    "productName": "FF Match Stats Analyzer",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "index.html",
+      "style.css",
+      "app.js",
+      "demo-data.js",
+      "manifest.webmanifest",
+      "sw.js",
+      "electron/**/*"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "artifactName": "FF-Match-Stats-Analyzer-Setup-${version}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    }
+  }
+}

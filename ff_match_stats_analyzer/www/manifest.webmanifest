@@ -1,0 +1,10 @@
+{
+  "name": "FF Match Stats Analyzer",
+  "short_name": "FF Stats",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0b101a",
+  "theme_color": "#101522",
+  "description": "Local Free Fire tournament match statistics analyzer",
+  "icons": []
+}

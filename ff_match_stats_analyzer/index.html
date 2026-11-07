@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#101522"><meta name="description" content="Local Free Fire esports match statistics analyzer">
+<link rel="manifest" href="manifest.webmanifest"><link rel="stylesheet" href="style.css">
+<title>FF Match Stats Analyzer</title>
+</head>
+<body>
+<div class="app-shell">
+<aside class="sidebar">
+  <div class="brand"><div class="brand-mark">FF</div><div><b>Match Stats</b><small>ANALYZER</small></div></div>
+  <nav id="nav">
+    <button class="nav-btn active" data-page="overview">▦ <span>Overview</span></button>
+    <button class="nav-btn" data-page="teams">♙ <span>Team leaderboard</span></button>
+    <button class="nav-btn" data-page="players">♟ <span>Player leaderboard</span></button>
+    <button class="nav-btn" data-page="matches">▤ <span>Matches</span></button>
+    <button class="nav-btn" data-page="compare">⇄ <span>Compare</span></button>
+    <button class="nav-btn" data-page="weapons">⌁ <span>Weapons & skills</span></button>
+    <button class="nav-btn" data-page="import">＋ <span>Import data</span></button>
+  </nav>
+  <div class="side-foot"><span class="dot"></span> Offline-ready · Local data</div>
+</aside>
+<main class="main">
+<header class="topbar"><div><div class="eyebrow">TOURNAMENT WORKSPACE</div><h1 id="page-title">Overview</h1></div><div class="top-actions"><button class="btn ghost" id="load-demo">Load demo match</button><button class="btn primary" id="top-import">＋ Import JSON</button></div></header>
+<section id="page-overview" class="page active">
+  <div class="welcome"><div><div class="eyebrow light">FREE FIRE · MATCH ANALYTICS</div><h2>Your tournament, in one view.</h2><p>Import match response JSON files and combine team and player statistics across matches.</p></div><div class="welcome-icon">◈</div></div>
+  <div class="stats-grid" id="overview-cards"></div>
+  <div class="two-col">
+    <div class="panel"><div class="panel-head"><div><h3>Top teams</h3><p>Ranked by total tournament points</p></div><button class="link-btn" data-go="teams">View all →</button></div><div id="top-teams"></div></div>
+    <div class="panel"><div class="panel-head"><div><h3>Top players</h3><p>Ranked by total eliminations</p></div><button class="link-btn" data-go="players">View all →</button></div><div id="top-players"></div></div>
+  </div>
+  <div class="panel"><div class="panel-head"><div><h3>Recent imported matches</h3><p>Match IDs in this workspace</p></div><button class="link-btn" data-go="matches">All matches →</button></div><div id="recent-matches"></div></div>
+</section>
+<section id="page-teams" class="page">
+ <div class="toolbar"><input id="team-search" class="search" placeholder="Search team name…"><button class="btn" id="team-export">Export CSV</button></div>
+ <div class="panel table-panel"><div class="table-wrap"><table><thead><tr><th>#</th><th>Team</th><th>Matches</th><th>Booyah</th><th>Points</th><th>Kills</th><th>Damage</th><th>Avg. place</th></tr></thead><tbody id="team-table"></tbody></table></div></div>
+</section>
+<section id="page-players" class="page">
+ <div class="toolbar"><input id="player-search" class="search" placeholder="Search player or team…"><select id="player-sort" class="select"><option value="kills">Sort: Kills</option><option value="damage">Damage</option><option value="assists">Assists</option><option value="headshots">Headshots</option><option value="knock_down">Knock downs</option></select><button class="btn" id="player-export">Export CSV</button></div>
+ <div class="panel table-panel"><div class="table-wrap"><table><thead><tr><th>#</th><th>Player</th><th>Team</th><th>Matches</th><th>Kills</th><th>Assists</th><th>Damage</th><th>HS</th><th>Knocks</th></tr></thead><tbody id="player-table"></tbody></table></div></div>
+</section>
+<section id="page-matches" class="page">
+ <div class="toolbar"><input id="match-search" class="search" placeholder="Search Match ID…"><button class="btn" id="match-export">Export CSV</button></div>
+ <div class="panel table-panel"><div class="table-wrap"><table><thead><tr><th>Match ID</th><th>Teams</th><th>Players</th><th>Top team</th><th>Top kills</th><th>Action</th></tr></thead><tbody id="match-table"></tbody></table></div></div>
+ <div id="match-detail"></div>
+</section>
+<section id="page-compare" class="page">
+ <div class="panel compare-panel"><div class="panel-head"><div><h3>Head-to-head comparison</h3><p>Compare cumulative tournament performance</p></div><div class="segmented"><button class="active" data-kind="team">Teams</button><button data-kind="player">Players</button></div></div>
+ <div class="compare-selects"><select id="compare-a" class="select"></select><div class="vs">VS</div><select id="compare-b" class="select"></select></div><div id="compare-result"></div></div>
+</section>
+<section id="page-weapons" class="page">
+ <div class="stats-grid" id="weapon-cards"></div>
+ <div class="two-col">
+  <div class="panel"><div class="panel-head"><div><h3>Weapon leaderboard</h3><p>Aggregated kills and damage by weapon</p></div></div><div class="table-wrap"><table><thead><tr><th>Weapon</th><th>Kills</th><th>Damage</th><th>Headshots</th></tr></thead><tbody id="weapon-table"></tbody></table></div></div>
+  <div class="panel"><div class="panel-head"><div><h3>Skill picks</h3><p>Active and passive skill usage</p></div></div><div class="table-wrap"><table><thead><tr><th>Skill</th><th>Type</th><th>Pick count</th></tr></thead><tbody id="skill-table"></tbody></table></div></div>
+ </div>
+</section>
+<section id="page-import" class="page">
+ <div class="panel import-panel"><div class="upload-icon">⇧</div><h2>Import match data</h2><p>Choose one or more JSON response files copied from the official match statistics page. Data is processed on this device.</p>
+ <label class="dropzone" for="file-input"><strong>＋ Select JSON files</strong><span>Multiple files supported · .json or .txt · up to 500 matches in your workspace</span></label><input type="file" id="file-input" accept=".json,.txt,application/json,text/plain" multiple hidden>
+ <div class="or">OR PASTE JSON</div><textarea id="json-paste" placeholder="Paste the complete match_data JSON response here…"></textarea><div class="import-actions"><button class="btn primary" id="paste-import">Import pasted JSON</button><button class="btn" id="clear-data">Clear workspace</button></div><div id="import-status" class="status"></div></div>
+ <div class="notice"><b>About automatic Match ID fetching</b><p>This build imports real JSON responses and analyzes them locally. Automatic fetching from the website is not enabled yet because the request signature (`_sign`) and timestamp rules must be verified. Do not paste cookies, authorization headers, or private tokens into this app.</p></div>
+</section>
+<footer>FF Match Stats Analyzer <span>·</span> Data stays in this browser unless you export it.</footer>
+</main></div>
+<div id="toast" class="toast"></div>
+<script src="demo-data.js"></script><script src="app.js"></script>
+</body></html>
